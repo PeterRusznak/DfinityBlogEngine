@@ -9,7 +9,7 @@
         "blog"
       ],
       "frontend": {
-        "entrypoint": "src/blog_assets/public/index.js"
+        "entrypoint": "src/blog_assets/public/index.tsx"
       },
       "source": [
         "src/blog_assets/assets",

@@ -49,6 +49,7 @@ function generateWebpackConfigForCanister(name, info) {
     },
     resolve: {
       alias: aliases,
+      extensions: ['.tsx', '.ts', '.js']
     },
     output: {
       filename: "[name].js",
@@ -66,6 +67,12 @@ function generateWebpackConfigForCanister(name, info) {
     //    { test: /\.css$/, use: ['style-loader','css-loader'] }
     //  ]
     // },
+    module: {
+      rules: [
+        //{ test: /\.(js|ts)x?$/, loader: "ts-loader" },
+        { test: /\.([jt]s)x?$/, loader: "ts-loader", exclude: /node_modules/ }
+      ],
+    },
     plugins: [],
   };
 }
