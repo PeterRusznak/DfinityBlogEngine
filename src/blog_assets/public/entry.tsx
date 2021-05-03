@@ -28,6 +28,40 @@ interface EntryIdl {
     id: { toNumber(): number };
 }
 
+export function NewUser() {
+
+    const [name, setName] = useState('');
+    const [done, setDone] = useState(false);
+    const [saving, setSaving] = useState(false);
+
+    async function submit() {
+        setSaving(true);
+        await blog.createUser(name);
+        setDone(true);
+    }
+
+    if (done) {
+        return (<Redirect to='/' />)
+    }
+
+    if (saving) {
+        return (<progress />);
+    }
+
+    return (
+        <div>
+            <form name="new-user" onSubmit={() => submit()}>
+                <div>Name : <input type="text" value={name} onChange={ev => setName(ev.target.value)} /></div>
+                <div><button type="submit">Submit</button></div>
+            </form>
+            <div>
+                <Link to="/">cancel</Link>
+            </div>
+        </div>
+    );
+}
+
+
 export function NewEntry() {
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('New Entry');

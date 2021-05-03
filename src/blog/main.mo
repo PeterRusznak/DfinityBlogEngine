@@ -1,8 +1,11 @@
 import Prim "mo:prim";
 import Array "mo:base/Array";
 import Types "./types";
+import Debug "mo:base/Debug";
+import Principal "mo:base/Principal";
 
-actor {
+
+shared({caller = initializer}) actor class() {
 
     type Entry = Types.Entry;
     type InternalEntry = Types.InternalEntry;
@@ -34,8 +37,8 @@ actor {
         }
     };
 
-    public shared(msg) func setUserRole(id: Principal, role0: Types.UserRole): async () {
-        if (isAdmin(msg.caller)) {
+    public shared({caller}) func setUserRole(id: Principal, role0: Types.UserRole): async () {
+        if (isAdmin(caller)) {
             let u = getUser(id);
             switch (u) {
                 case (null) {};
@@ -55,19 +58,19 @@ actor {
         }
     };
 
-    public shared(msg) func createUser(name0: Text, desc0: Text): async () {
+    public shared({caller}) func createUser(name0: Text): async () {
         let role0: Types.UserRole = if (entries.size() == 0) { #admin } else { #base };
         let user: User = {
-            id = msg.caller;
+            id = caller;
             role = role0;
             name = name0;
-            description = desc0;
+            description = "desc0";
         };
         users := Array.append<User>(users, [user]);
     };
 
-    public shared(msg) func getUserList(): async [User] {
-        if (isAdmin(msg.caller)) {
+    public shared({caller}) func getUserList(): async [User] {
+        if (isAdmin(caller)) {
             return users;
         } else {
             return [];
@@ -96,16 +99,24 @@ actor {
         text
     };
 
-    public shared(msg) func newEntry(title0: Text, content0: Text): async () {
-        let u = getUser(msg.caller);
+    public shared({caller}) func newEntry(title0: Text, content0: Text): async () {
+        let u = getUser(caller);
+       
+        let p = Principal.toText(caller);        
+        Debug.print (p);
+
         switch (u) {
             case (null) {
+                Debug.print ("SAjnos Abszolut null  \n");
                 return;
             };
             case (?u) {
                 switch (u.role) {
                     case (#admin or #editor) {};
-                    case (_) { return; }
+                    case (_) {
+                        Debug.print ("EZ iS szar  \n"); 
+                        //return; 
+                        }
                 }
             }
         };
@@ -113,7 +124,7 @@ actor {
         uniqueId := uniqueId + 1;
         let entry: InternalEntry = {
             id = uniqueId;
-            author = msg.caller;
+            author = caller;
             content = content0;
             title = title0;
         };
