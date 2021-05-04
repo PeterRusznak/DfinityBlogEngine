@@ -11,7 +11,6 @@ export const NewUser = () => {
 
     const submit = async () => {
         setSaving(true)
-        console.log(name)
         await blog.createUser(name);
         setDone(true)
     }
@@ -27,6 +26,7 @@ export const NewUser = () => {
             <form name="new-user" onSubmit={() => submit()}>
                 <div>Name : <input type="text" value={name} onChange={ev => setName(ev.target.value)} /></div>
                 <div><button type="submit">Submit</button></div>
+
             </form>
             <div>
                 <Link to="/">cancel</Link>
@@ -43,13 +43,16 @@ export const UserList = () => {
             setUserList(list)
         }
         );
-    });
+    }, []);
 
     return (
         <ol>
             {userList.map(entry => {
-                return (<li><input value={entry.name} /></li>);
+                //console.log(entry.role.admin);
+                console.log(entry.id);
+                return (<li>{entry.name} {entry.description}  </li>);
             })}
         </ol>
     );
-}
+};
+

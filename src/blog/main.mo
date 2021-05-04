@@ -53,10 +53,21 @@ shared({caller = initializer})  actor class(){
     };
 
     public shared({caller}) func getUserList(): async [User]{
-        if(isAdmin(caller)){
+        if(isAdmin(caller) or caller == initializer){
             return users;
         };
         return [];
+    };
+
+
+    public shared({caller}) func setUserRole(id:Principal, role0:Types.UserRole):  async(){
+        let p = Principal.toText(caller);
+        Debug.print("princi"#p);
+        if(isAdmin(caller) or caller == initializer){
+            Debug.print("admin")
+        }else{
+            Debug.print("nem admin")
+        };
     };
 
 }
