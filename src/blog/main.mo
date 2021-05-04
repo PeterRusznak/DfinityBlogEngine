@@ -25,5 +25,38 @@ shared({caller = initializer})  actor class(){
 
     public func listUsers(): async [User]{
         users
-    }; 
+    };
+
+    func getUser(id:Principal): ?User{
+        func predicate(u:User):Bool{
+            u.id == id
+        };
+        Array.find(users, predicate)
+    };
+
+    func isAdmin(id:Principal): Bool{
+        switch(getUser(id)){
+            case (null){
+                return false;
+            };
+            case(?u){
+                switch(u.role){
+                    case(#admin){
+                        return true;
+                    };
+                    case(_){
+                        return false;
+                    }
+                }
+            };
+        };
+    };
+
+    public shared({caller}) func getUserList(): async [User]{
+        if(isAdmin(caller)){
+            return users;
+        };
+        return [];
+    };
+
 }

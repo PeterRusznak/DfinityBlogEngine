@@ -1,5 +1,5 @@
 import React from 'react'
-import { NewUser } from './entry';
+import { NewUser, UserList } from './users';
 import {
     HashRouter as Router,
     Switch,
@@ -13,6 +13,7 @@ const App = () => {
             <Switch>
                 <Route path="/" exact>
                     <Link to="/newUser">New User</Link>
+                    <UserList />
                 </Route>
 
                 <Route path="/newUser/"><NewUser /></Route>

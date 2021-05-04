@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { UserIdl } from './utils';
 
-export function NewUser() {
+export const NewUser = () => {
     const [name, setName] = useState('');
     const [done, setDone] = useState(false);
     const [saving, setSaving] = useState(false);
@@ -34,3 +34,22 @@ export function NewUser() {
         </div>
     )
 };
+
+export const UserList = () => {
+    const [userList, setUserList] = useState([] as UserIdl[]);
+
+    useEffect(() => {
+        blog.getUserList().then((list: UserIdl[]) => {
+            setUserList(list)
+        }
+        );
+    });
+
+    return (
+        <ol>
+            {userList.map(entry => {
+                return (<li><input value={entry.name} /></li>);
+            })}
+        </ol>
+    );
+}
