@@ -8,6 +8,12 @@ shared({caller = initializer})  actor class(){
     type User = Types.User;
     var users: [User] = [];
 
+    type Entry = Types.Entry;
+    type InternalEntry = Types.InternalEntry;
+
+    var entries:[InternalEntry] = [];
+    var uniqueId:Nat = 0;
+
     public shared({caller}) func createUser(name0:Text): async(){
       let role0: Types.UserRole = if (users.size() == 0){
           #admin
@@ -60,14 +66,26 @@ shared({caller = initializer})  actor class(){
     };
 
 
-    public shared({caller}) func setUserRole(id:Principal, role0:Types.UserRole):  async(){
-        let p = Principal.toText(caller);
-        Debug.print("princi"#p);
+    public shared({caller}) func setUserRole(id:Principal, newRole:Types.UserRole):  async(){
         if(isAdmin(caller) or caller == initializer){
-            Debug.print("admin")
-        }else{
-            Debug.print("nem admin")
+            let u = getUser(id);    
+            switch(u){
+                case(null){};
+                case(?u){
+                    let newUser:User = {
+                        id = u.id;
+                        name = u.name;
+                        description = u.description;
+                        role = newRole;
+                    };
+                    func predicate(other:User):Bool{
+                        other.id != u.id;
+                    };
+                    users := Array.append<User>(Array.filter<User>(users, predicate), [newUser]);
+                };
+            };    
         };
     };
 
+ 
 }
