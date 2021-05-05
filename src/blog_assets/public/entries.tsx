@@ -42,7 +42,7 @@ export const NewEntry = () => {
                     <button className="btn btn-primary" type="submit">Submit</button>
                 </div>
             </form>
-            <div className="marginleft3perc">
+            <div>
                 <Link to="/">cancel</Link>
             </div>
         </div>
