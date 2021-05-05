@@ -13,8 +13,12 @@ const App = () => {
         <Router>
             <Switch>
                 <Route path="/" exact>
-                    <Link to="/newUser"><button  >NEW USER </button></Link>
-                    <Link to="/newEntry">New Entry</Link>
+                    <Link to="/newUser">
+                        <button className="btn btn-primary">New User </button>
+                    </Link>
+                    <Link to="/newEntry">
+                        <button className="btn btn-primary">New Entry </button>
+                    </Link>
                     <UserList />
                 </Route>
 

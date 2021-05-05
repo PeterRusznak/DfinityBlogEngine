@@ -30,7 +30,7 @@ export const NewEntry = () => {
                 <div>Title: <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} /></div>
                 <div>Content:</div>
                 <div><textarea value={content} onChange={ev => setContent(ev.target.value)} /></div>
-                <div><button type="submit">Submit</button></div>
+                <div><button className="btn btn-primary" type="submit">Submit</button></div>
             </form>
             <div>
                 <Link to="/">cancel</Link>

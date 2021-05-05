@@ -25,7 +25,7 @@ export const NewUser = () => {
         <div>
             <form name="new-user" onSubmit={() => submit()}>
                 <div>Name : <input type="text" value={name} onChange={ev => setName(ev.target.value)} /></div>
-                <div><button type="submit">Submit</button></div>
+                <div><button className="btn btn-primary" type="submit">Submit</button></div>
 
             </form>
             <div>
