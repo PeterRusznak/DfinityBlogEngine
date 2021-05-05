@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { UserIdl } from './utils';
+import './App.css';
 
 export const NewUser = () => {
     const [name, setName] = useState('');
@@ -23,13 +24,15 @@ export const NewUser = () => {
     }
     return (
         <div>
-            <form name="new-user" onSubmit={() => submit()}>
+            <form name="new-user" className="form-group" onSubmit={() => submit()}>
                 <div>Name : <input type="text" value={name} onChange={ev => setName(ev.target.value)} /></div>
                 <div><button className="btn btn-primary" type="submit">Submit</button></div>
 
             </form>
             <div>
-                <Link to="/">cancel</Link>
+                <Link to="/">
+                    Cancel
+                </Link>
             </div>
         </div>
     )

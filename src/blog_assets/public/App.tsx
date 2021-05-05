@@ -1,5 +1,6 @@
 import React from 'react'
 import { NewUser, UserList } from './users';
+import './App.css';
 import { NewEntry } from './entries';
 import {
     HashRouter as Router,

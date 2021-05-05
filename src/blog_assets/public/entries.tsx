@@ -5,6 +5,7 @@ import { Link, Redirect, useParams } from 'react-router-dom';
 import { UserIdl, EntryIdl } from './utils';
 
 
+
 export const NewEntry = () => {
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('New Entry');
@@ -26,13 +27,22 @@ export const NewEntry = () => {
 
     return (
         <div>
-            <form name="new-entry" onSubmit={() => submit()}>
-                <div>Title: <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} /></div>
+            <form className="form-group" name="new-entry" onSubmit={() => submit()}>
+                <div>
+                    Title:
+                    <input type="text" placeholder={title} className="form-control"
+                        onChange={ev => setTitle(ev.target.value)} />
+                </div>
                 <div>Content:</div>
-                <div><textarea value={content} onChange={ev => setContent(ev.target.value)} /></div>
-                <div><button className="btn btn-primary" type="submit">Submit</button></div>
+                <div>
+                    <textarea value={content} className="form-control"
+                        onChange={ev => setContent(ev.target.value)} />
+                </div>
+                <div>
+                    <button className="btn btn-primary" type="submit">Submit</button>
+                </div>
             </form>
-            <div>
+            <div className="marginleft3perc">
                 <Link to="/">cancel</Link>
             </div>
         </div>
