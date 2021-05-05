@@ -4,14 +4,13 @@ export interface UserIdl {
     name: string;
     description: string;
     role: [];
-}
+};
 
-/*
-interface EntryIdl {
+
+export interface EntryIdl {
     author: [UserIdl?];
     header: string;
     content: [string?];
     title: string;
     id: { toNumber(): number };
-}
-*/
+};

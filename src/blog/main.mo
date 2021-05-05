@@ -87,5 +87,36 @@ shared({caller = initializer})  actor class(){
         };
     };
 
- 
+    //----------------------------------------------------------------------
+    
+    public shared({caller}) func createEntry(title0: Text, content0:Text): async(){
+        let u = getUser(caller);
+        switch(u){
+            case(null){
+                Debug.print("User NULL, Register first");
+                return;
+            };
+            case(?u){
+                switch(u.role){
+                    case(#admin or #editor){};
+                    case(_){
+                        Debug.print("Only admin or editor can write");
+                        return;
+                    };
+                };
+            };
+        };
+        uniqueId := uniqueId + 1;
+        let entry: InternalEntry = {
+            id = uniqueId;
+            author = caller;
+            content = content0;
+            title = title0;
+        };
+        entries := Array.append<InternalEntry>(entries, [entry]);
+    };
+
+    public func seeEntries(): async [InternalEntry]{
+        entries;
+    };
 }
