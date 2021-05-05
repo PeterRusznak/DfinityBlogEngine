@@ -54,6 +54,35 @@ export const NewEntry = () => {
     );
 };
 
+export const EntryList = () => {
+    const [entryList, setEntryList] = useState([] as EntryIdl[]);
+
+    useEffect(() => {
+        blog.listEntries(10).then((list: EntryIdl[]) => setEntryList(list));
+    }, []);
+
+    return (
+        <ol>
+            {entryList.map(entry => {
+                return (
+                    <li>
+                        <EntrySummary entry={entry} />
+                    </li>
+                );
+            })}
+        </ol>
+    );
+};
+
+export const EntrySummary = (props: { entry: EntryIdl }) => {
+    const entry = props.entry;
+    return (
+        <div>
+            <h1>{entry.title}</h1>
+            <h3>{entry.header}</h3>
+        </div>
+    );
+};
 
 
 

@@ -119,4 +119,26 @@ shared({caller = initializer})  actor class(){
     public func seeEntries(): async [InternalEntry]{
         entries;
     };
+
+    public query func listEntries(max: Nat): async [Entry] {
+        var m = max;
+        if (entries.size() == 0) {
+            return [];
+        };
+        if (m > entries.size()) {
+            m := entries.size();
+        };
+        func gen(i:Nat): Entry {
+            let e = entries[entries.size() - i -1];
+            let a = getUser(e.author);
+            {
+                id = e.id;
+                author = a;
+                title = e.title;
+                header = e.content;
+                content = null;
+            }       
+        };
+        Array.tabulate<Entry>(m, gen)      
+    };
 }

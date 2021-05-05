@@ -1,7 +1,7 @@
 import React from 'react'
 import { NewUser, UserList } from './users';
 import './App.css';
-import { NewEntry } from './entries';
+import { NewEntry, EntryList } from './entries';
 import {
     HashRouter as Router,
     Switch,
@@ -17,6 +17,9 @@ const App = () => {
                     <Link to="/newUser">
                         <button className="btn btn-primary">New User </button>
                     </Link>
+
+                    <EntryList />
+
                     <Link to="/newEntry">
                         <button className="btn btn-primary">New Entry </button>
                     </Link>
