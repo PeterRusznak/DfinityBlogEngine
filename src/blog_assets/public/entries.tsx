@@ -42,9 +42,14 @@ export const NewEntry = () => {
                     <button className="btn btn-primary" type="submit">Submit</button>
                 </div>
             </form>
-            <div>
-                <Link to="/">cancel</Link>
+
+            <div className="form-group">
+                <Link to="/">
+                    <button className="btn btn-danger" type="submit">
+                        Cancel</button>
+                </Link>
             </div>
+
         </div>
     );
 };

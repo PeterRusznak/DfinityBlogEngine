@@ -31,17 +31,19 @@ export const NewUser = () => {
                         onChange={ev => setName(ev.target.value)} />
                 </div>
 
-                <div>
+                <div >
                     <button className="btn btn-primary" type="submit">
                         Submit</button>
                 </div>
-
             </form>
-            <div>
+
+            <div className="form-group">
                 <Link to="/">
-                    Cancel
+                    <button className="btn btn-danger" type="submit">
+                        Cancel</button>
                 </Link>
             </div>
+
         </div>
     )
 };
