@@ -164,4 +164,28 @@ shared({caller = initializer})  actor class(){
         text
     };
 
-}
+
+    public query func getEntry(id0: Nat): async ?Entry{
+        func is_eq(other: InternalEntry):Bool{
+            other.id == id0
+        };
+        switch(Array.find<InternalEntry>(entries, is_eq)){
+            case(null){
+                return null;
+            };
+            case(?e){
+                func userFinder(u:User):Bool{
+                    u.id == e.author
+                };
+                let a = Array.find(users, userFinder);
+                return ?{
+                    id = e.id;
+                    author = a;
+                    title = e.title;
+                    header = entryHeader(e.content);
+                    content = ?e.content;
+                };
+            };
+        };    
+    };
+};

@@ -88,9 +88,35 @@ export const EntrySummary = (props: { entry: EntryIdl }) => {
 
 export const Entry = () => {
     let { id } = useParams<{ id: string }>();
+    const [entry, setEntry] = useState({} as EntryIdl);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        let natId = parseInt('' + id, 10);
+        if (!isFinite(natId)) {
+            throw new Error('Invalid ID' + JSON.stringify(natId));
+        }
+        blog.getEntry(natId).then((optEntry: EntryIdl[]) => {
+            let [entry] = optEntry;
+            if (!entry) {
+
+                throw new Error('ID not found.');
+            } else {
+                setEntry(entry);
+                setLoading(false);
+            }
+        });
+    })
+
+    if (loading) {
+        return (<progress />);
+    }
+
     return (
         <div>
-            {id}
+            <section><h1>{entry.title}</h1></section>
+            <section dangerouslySetInnerHTML={{ __html: markdown.toHTML(entry.content[0] || entry.header) }}></section>
+          By <span>{entry.author[0]?.name}</span>. <Link to="/">back</Link>
         </div>
     );
 };
