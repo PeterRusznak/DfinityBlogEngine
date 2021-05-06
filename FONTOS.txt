@@ -1,0 +1,4 @@
+igy kell hívni:
+dfx canister call blog setUserRole '((principal "hjsaw-ycibl-ukwds-qwutc-eujcz-nbzx6-jom76-mndj2-p4kmy-w4srh-yqe"), variant{editor})'
+ha pedig optional akkor:
+dfx canister call blog setUserRole '((principal "hjsaw-ycibl-ukwds-qwutc-eujcz-nbzx6-jom76-mndj2-p4kmy-w4srh-yqe"), opt variant{editor})'
