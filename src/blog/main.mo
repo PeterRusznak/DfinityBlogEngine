@@ -67,11 +67,13 @@ shared({caller = initializer})  actor class(){
     };
 
 
-    public shared({caller}) func setUserRole(id:Principal, newRole:Types.UserRole):  async(){
+    public shared({caller}) func setUserRole(id:Principal, newRole:Types.UserRole):  async ?User{
         if(isAdmin(caller) or caller == initializer){
             let u = getUser(id);    
             switch(u){
-                case(null){};
+                case(null){
+                    return null;
+                };
                 case(?u){
                     let newUser:User = {
                         id = u.id;
@@ -83,9 +85,13 @@ shared({caller = initializer})  actor class(){
                         other.id != u.id;
                     };
                     users := Array.append<User>(Array.filter<User>(users, predicate), [newUser]);
+                    return ?newUser;
                 };
+                
             };    
-        };
+        }else{
+         return null;
+        }
     };
 
     //----------------------------------------------------------------------
