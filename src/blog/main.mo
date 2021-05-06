@@ -166,6 +166,7 @@ shared({caller = initializer})  actor class(){
 
 
     public query func getEntry(id0: Nat): async ?Entry{
+        //LaSSUK
         func is_eq(other: InternalEntry):Bool{
             other.id == id0
         };
