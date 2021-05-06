@@ -14,7 +14,7 @@ shared({caller = initializer})  actor class(){
     var entries:[InternalEntry] = [];
     var uniqueId:Nat = 0;
 
-    public shared({caller}) func createUser(name0:Text): async(){
+    public shared({caller}) func createUser(name0:Text): async User{
       let role0: Types.UserRole = if (users.size() == 0){
           #admin
       }else{
@@ -27,6 +27,7 @@ shared({caller = initializer})  actor class(){
           description = "desc"
       };
       users :=  Array.append<User>(users, [user]);
+      user
     };
 
     public func listUsers(): async [User]{
@@ -89,19 +90,19 @@ shared({caller = initializer})  actor class(){
 
     //----------------------------------------------------------------------
     
-    public shared({caller}) func createEntry(title0: Text, content0:Text): async(){
+    public shared({caller}) func createEntry(title0: Text, content0:Text): async ?InternalEntry{
         let u = getUser(caller);
         switch(u){
             case(null){
                 Debug.print("User NULL, Register first");
-                return;
+                return null;
             };
             case(?u){
                 switch(u.role){
                     case(#admin or #editor){};
                     case(_){
                         Debug.print("Only admin or editor can write");
-                        return;
+                        return null;
                     };
                 };
             };
@@ -114,6 +115,7 @@ shared({caller = initializer})  actor class(){
             title = title0;
         };
         entries := Array.append<InternalEntry>(entries, [entry]);
+        ?entry;
     };
 
     public func seeEntries(): async [InternalEntry]{
