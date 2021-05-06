@@ -1,7 +1,7 @@
 import React from 'react'
 import { NewUser, UserList } from './users';
 import './App.css';
-import { NewEntry, EntryList } from './entries';
+import { NewEntry, EntryList, Entry } from './entries';
 import {
     HashRouter as Router,
     Switch,
@@ -25,7 +25,7 @@ const App = () => {
                     </Link>
                     <UserList />
                 </Route>
-
+                <Route path="/entry/:id" children={<Entry />} />
                 <Route path="/newUser/"><NewUser /></Route>
                 <Route path="/newEntry/"><NewEntry /></Route>
 

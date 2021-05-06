@@ -135,10 +135,33 @@ shared({caller = initializer})  actor class(){
                 id = e.id;
                 author = a;
                 title = e.title;
-                header = e.content;
+                header = entryHeader(e.content);
                 content = null;
             }       
         };
         Array.tabulate<Entry>(m, gen)      
     };
+
+    func entryHeader(content: Text): Text {
+        let chars = content.chars();
+        var text = "";
+        var first = false;  // Indication that we saw a \n in the last character.
+        label w for (c in chars) {
+            if (c == '\r') {
+                continue w;
+            };
+            if (c == '\n') {
+                if (first) {
+                    break w;
+                } else {
+                    first := true;
+                }
+            } else {
+                first := false;
+            };
+            text := text # Prim.charToText(c);
+        };
+        text
+    };
+
 }

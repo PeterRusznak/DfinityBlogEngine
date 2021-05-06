@@ -2,9 +2,9 @@ import React from 'react'
 import blog from 'ic:canisters/blog';
 import { useEffect, useState } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
-import { UserIdl, EntryIdl } from './utils';
+import { EntryIdl } from './utils';
 
-
+const markdown = require('markdown').markdown;
 
 export const NewEntry = () => {
     const [content, setContent] = useState('');
@@ -79,10 +79,18 @@ export const EntrySummary = (props: { entry: EntryIdl }) => {
     return (
         <div>
             <h1>{entry.title}</h1>
-            <h3>{entry.header}</h3>
+            <section dangerouslySetInnerHTML={{ __html: markdown.toHTML(entry.header) }}></section>
+            By <span>{entry.author[0]?.name}</span>. <Link to={'/entry/' + entry.id}>view</Link>
         </div>
     );
 };
 
 
-
+export const Entry = () => {
+    let { id } = useParams<{ id: string }>();
+    return (
+        <div>
+            {id}
+        </div>
+    );
+};
